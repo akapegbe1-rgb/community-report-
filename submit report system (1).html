@@ -1,0 +1,17 @@
+<h2>📝 Submit New Report</h2>
+<form id="reportForm">
+    <div class="form-group"><label for="reporterName">Your Name *</label> <input type="text" id="reporterName" required placeholder="John Doe">
+    </div>
+    <div class="form-group"><label for="reporterEmail">Email Address *</label> <input type="email" id="reporterEmail" required placeholder="john@example.com">
+    </div>
+    <div class="form-group"><label for="title">Report Title *</label> <input type="text" id="title" required placeholder="Brief description of the issue">
+    </div>
+    <div class="form-group"><label for="category">Category *</label> <select id="category" required> <option value="">Select a category</option> <option value="Infrastructure">🏗️ Infrastructure</option> <option value="Safety">🚨 Safety</option> <option value="Environment">🌳 Environment</option> <option value="Maintenance">🔧 Maintenance</option> <option value="Other">📌 Other</option> </select>
+    </div>
+    <div class="form-group"><label for="location">Location *</label> <input type="text" id="location" required placeholder="Street address or area">
+    </div>
+    <div class="form-group"><label for="description">Description *</label> <textarea id="description" required placeholder="Provide detailed information about the issue..."></textarea>
+    </div>
+    <div class="form-group"><label for="imageUpload">Upload Image (Optional)</label>
+        <div class="file-input-wrapper"><input type="file" id="imageUpload" accept="image/*"> <label for="imageUpload" class="file-input-label"> 📷 Choose Image </label>
+        </div>
