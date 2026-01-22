@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Report System - Client Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .reports-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .report-item {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .report-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .report-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .status-pending {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .status-reviewing {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .status-resolved {
+            background: #28a745;
+            color: white;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏘️ Community Report System</h1>
+            <p>Submit and track community reports</p>
+        </div>
+
+        <div class="stats-container" id="statsContainer">
+            <div class="stat-card">
+                <p class="stat-number" id="totalReports">0</p>
+                <p class="stat-label">Total Reports</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number" id="pendingReports">0</p>
+                <p class="stat-label">Pending</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number" id="reviewingReports">0</p>
+                <p class="stat-label">Reviewing</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number" id="resolvedReports">0</p>
+                <p class="stat-label">Resolved</p>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="card">
+                <h2>📝 Submit New Report</h2>
+                <div id="submitMessage" class="message"></div>
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="reporterName">Your Name *</label>
+                        <input type="text" id="reporterName" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="reporterEmail">Email Address *</label>
+                        <input type="email" id="reporterEmail" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Report Title *</label>
+                        <input type="text" id="title" required placeholder="Brief description of the issue">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" required>
+                            <option value="">Select a category</option>
+                            <option value="Infrastructure">🏗️ Infrastructure</option>
+                            <option value="Safety">🚨 Safety</option>
+                            <option value="Environment">🌳 Environment</option>
+                            <option value="Maintenance">🔧 Maintenance</option>
+                            <option value="Other">📌 Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location *</label>
+                        <input type="text" id="location" required placeholder="Street address or area">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description *</label>
+                        <textarea id="description" required placeholder="Provide detailed information about the issue..."></textarea>
+                    </div>
+                    <button type="submit">Submit Report</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>📋 Recent Reports</h2>
+                <div id="reportsList" class="reports-list">
+                    <div class="loading">Loading reports...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        // Load reports on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadReports();
+            loadStats();
+        });
+
+        // Form submission
+        document.getElementById('reportForm').addEventListener('submit', async(e) => {
+            e.preventDefault();
+
+            const formData = {
+                reporterName: document.getElementById('reporterName').value,
+                reporterEmail: document.getElementById('reporterEmail').value,
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                location: document.getElementById('location').value,
+                description: document.getElementById('description').value,
+                image: null
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/reports`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('Report submitted successfully! Thank you for your contribution.', 'success', 'submitMessage');
+                    document.getElementById('reportForm').reset();
+                    loadReports();
+                    loadStats();
+                } else {
+                    showMessage('Error: ' + data.message, 'error', 'submitMessage');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Failed to submit report. Make sure the backend server is running on http://localhost:3000', 'error', 'submitMessage');
+            }
+        });
+
+        // Load all reports
+        async function loadReports() {
+            try {
+                const response = await fetch(`${API_URL}/reports`);
+                const data = await response.json();
+
+                const reportsList = document.getElementById('reportsList');
+                reportsList.innerHTML = '';
+
+                if (data.reports && data.reports.length > 0) {
+                    data.reports.forEach(report => {
+                        const statusClass = `status-${report.status.toLowerCase()}`;
+                        const reportHtml = `
+                            <div class="report-item">
+                                <h3>${report.title}</h3>
+                                <div class="report-info">
+                                    <strong>Category:</strong> ${report.category} | 
+                                    <strong>Location:</strong> ${report.location}
+                                </div>
+                                <div class="report-info">
+                                    <strong>Reporter:</strong> ${report.reporterName} (${report.reporterEmail})
+                                </div>
+                                <div class="report-info">
+                                    <span class="status-badge ${statusClass}">${report.status}</span>
+                                    <small>Submitted: ${new Date(report.createdAt).toLocaleDateString()}</small>
+                                </div>
+                                <div class="report-info" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd;">
+                                    ${report.description.substring(0, 100)}...
+                                </div>
+                            </div>
+                        `;
+                        reportsList.innerHTML += reportHtml;
+                    });
+                } else {
+                    reportsList.innerHTML = '<p style="text-align: center; color: #666;">No reports yet. Be the first to submit one!</p>';
+                }
+            } catch (error) {
+                console.error('Error loading reports:', error);
+                document.getElementById('reportsList').innerHTML = '<p style="color: red;">Error loading reports. Check if backend is running.</p>';
+            }
+        }
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_URL}/stats`);
+                const data = await response.json();
+
+                if (data.stats) {
+                    document.getElementById('totalReports').textContent = data.stats.total;
+                    document.getElementById('pendingReports').textContent = data.stats.pending;
+                    document.getElementById('reviewingReports').textContent = data.stats.reviewing;
+                    document.getElementById('resolvedReports').textContent = data.stats.resolved;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Show message
+        function showMessage(message, type, elementId) {
+            const messageEl = document.getElementById(elementId);
+            messageEl.textContent = message;
+            messageEl.className = `message ${type}`;
+            setTimeout(() => {
+                messageEl.className = 'message';
+            }, 5000);
+        }
+
+        // Refresh reports every 10 seconds
+        setInterval(loadReports, 10000);
+        setInterval(loadStats, 10000);
+    </script>
+</body>
+
+</html>

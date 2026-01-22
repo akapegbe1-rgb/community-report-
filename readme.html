@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Report System - Backend Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        pre code {
+            color: #333;
+            padding: 0;
+            background: none;
+        }
+        
+        ul,
+        ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .team-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .team-card strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        
+        .endpoint {
+            background: #f8f9fa;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border-left: 4px solid #764ba2;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .back-link:hover {
+            background: #764ba2;
+        }
+        
+        .json-block {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+        
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .note strong {
+            color: #2196F3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Community Report System</h1>
+            <p>Backend Documentation</p>
+        </div>
+
+        <div class="content">
+            <a href="client-example.html" class="back-link">← Back to Client</a>
+
+            <h2>Development Team</h2>
+
+            <h3>Engineers</h3>
+            <div class="team-card">
+                <strong>Jeff</strong> - Backend API Development & Data Management
+            </div>
+            <div class="team-card">
+                <strong>Akap</strong> - Frontend UI/UX & Client Integration
+            </div>
+
+            <h3>Work Separation</h3>
+
+            <h3>Jeff's Responsibilities (Backend)</h3>
+            <ul>
+                <li>REST API endpoint design and implementation (<code>server.js</code>, <code>server-new.js</code>)</li>
+                <li>Database operations (reading/writing to <code>reports.json</code>)</li>
+                <li>Report management (CRUD operations)</li>
+                <li>Status updates and filtering logic</li>
+                <li>Comments system</li>
+                <li>Statistics calculation</li>
+                <li>Error handling and validation</li>
+            </ul>
+
+            <h3>Akap's Responsibilities (Frontend)</h3>
+            <ul>
+                <li>HTML client interfaces (<code>submit report system.html</code>, <code>community page.html</code>, <code>client-example.html</code>)</li>
+                <li>User form creation and validation</li>
+                <li>Frontend UI/UX design and styling (<code>css of the website.css</code>)</li>
+                <li>Image preview functionality (<code>image preview.html</code>)</li>
+                <li>API integration and data fetching</li>
+                <li>Report display and filtering UI</li>
+            </ul>
+
+            <h2>Setup</h2>
+
+            <h3>1. Install Dependencies</h3>
+            <pre><code>cd backend
+npm install</code></pre>
+
+            <h3>2. Start the Server</h3>
+            <p><strong>Development mode</strong> (with auto-reload):</p>
+            <pre><code>npm run dev</code></pre>
+
+            <p><strong>Production mode</strong>:</p>
+            <pre><code>npm start</code></pre>
+
+            <p>The server will run on <code>http://localhost:3000</code></p>
+
+            <h2>API Endpoints</h2>
+
+            <h3>Get All Reports</h3>
+            <div class="endpoint">GET /api/reports</div>
+            <p>Returns all reports with statistics.</p>
+
+            <h3>Filter Reports</h3>
+            <div class="endpoint">GET /api/reports/filter?category=Infrastructure&status=Pending</div>
+            <p><strong>Query parameters:</strong></p>
+            <ul>
+                <li><code>category</code>: Filter by category (Infrastructure, Safety, Environment, Maintenance, Other, or 'all')</li>
+                <li><code>status</code>: Filter by status (Pending, Reviewing, Resolved, or 'all')</li>
+            </ul>
+
+            <h3>Get Single Report</h3>
+            <div class="endpoint">GET /api/reports/:id</div>
+            <p>Returns a specific report by ID.</p>
+
+            <h3>Submit New Report</h3>
+            <div class="endpoint">POST /api/reports</div>
+            <p><strong>Body:</strong></p>
+            <div class="json-block">{ "reporterName": "John Doe", "reporterEmail": "john@example.com", "title": "Pothole on Main Street", "category": "Infrastructure", "location": "123 Main Street", "description": "Large pothole affecting traffic", "image": "base64_encoded_image_or_null"
+                }
+            </div>
+
+            <h3>Update Report Status</h3>
+            <div class="endpoint">PUT /api/reports/:id/status</div>
+            <p><strong>Body:</strong></p>
+            <div class="json-block">{ "status": "Reviewing" }
+            </div>
+            <p><strong>Status values:</strong> <code>Pending</code>, <code>Reviewing</code>, <code>Resolved</code></p>
+
+            <h3>Delete Report</h3>
+            <div class="endpoint">DELETE /api/reports/:id</div>
+
+            <h3>Add Comment to Report</h3>
+            <div class="endpoint">POST /api/reports/:id/comments</div>
+            <p><strong>Body:</strong></p>
+            <div class="json-block">{ "author": "Admin", "comment": "We are investigating this issue" }
+            </div>
+
+            <h3>Get Statistics</h3>
+            <div class="endpoint">GET /api/stats</div>
+            <p>Returns report statistics.</p>
+
+            <h2>Data Structure</h2>
+
+            <p>Reports are stored in <code>backend/data/reports.json</code>:</p>
+
+            <div class="json-block">{ "reports": [ { "id": "report-1234567890-abc123", "reporterName": "John Doe", "reporterEmail": "john@example.com", "title": "Pothole on Main Street", "category": "Infrastructure", "location": "123 Main Street", "description": "Large pothole
+                affecting traffic", "image": null, "status": "Pending", "createdAt": "2026-01-22T10:30:00.000Z", "updatedAt": "2026-01-22T10:30:00.000Z", "comments": [] } ], "stats": { "total": 1, "pending": 1, "reviewing": 0, "resolved": 0 } }
+            </div>
+
+            <h2>Frontend Integration</h2>
+
+            <p>Update your HTML files to use the backend API:</p>
+
+            <h3>Example: Submit a report</h3>
+            <pre><code>const submitReport = async (formData) => {
+  const response = await fetch('http://localhost:3000/api/reports', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  });
+  return await response.json();
+};</code></pre>
+
+            <h3>Example: Load all reports</h3>
+            <pre><code>const loadReports = async () => {
+  const response = await fetch('http://localhost:3000/api/reports');
+  const data = await response.json();
+  return data.reports;
+};</code></pre>
+
+            <h2>Notes</h2>
+
+            <div class="note">
+                <strong>Important:</strong>
+                <ul>
+                    <li>All timestamps are stored in ISO 8601 format</li>
+                    <li>Images are stored as base64 strings in the JSON file</li>
+                    <li>CORS is enabled for local frontend development</li>
+                    <li>Maximum request body size is 50MB (for image uploads)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2026 Community Report System | Developed by Jeff & Akap</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Last Updated: January 22, 2026</p>
+        </div>
+    </div>
+</body>
+
+</html>
